@@ -25,7 +25,7 @@ jobs:
             - name: Build and test binding
               run: |
                   ./generate_proto.sh
-                  python -c "from chimera_llm_proto import chimera_llm_pb2, chimera_llm_pb2_grpc"
+                  python -c "from yaclips.proto import yaclips_pb2, yaclips_pb2_grpc"
             # Lint before commit
             - uses: pre-commit/action@v3.0.0
               continue-on-error: true
