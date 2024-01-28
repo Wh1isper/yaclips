@@ -2,6 +2,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from . import yaclips_pb2 as yaclips__pb2
+
 
 class clipStub(object):
     """Missing associated documentation comment in .proto file."""
@@ -12,18 +14,53 @@ class clipStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.encode = channel.unary_unary(
+                '/clip/encode',
+                request_serializer=yaclips__pb2.ListOfRawData.SerializeToString,
+                response_deserializer=yaclips__pb2.ListOfEncodedData.FromString,
+                )
 
 
 class clipServicer(object):
     """Missing associated documentation comment in .proto file."""
 
+    def encode(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_clipServicer_to_server(servicer, server):
-    rpc_method_handlers = {}
-    generic_handler = grpc.method_handlers_generic_handler("clip", rpc_method_handlers)
+    rpc_method_handlers = {
+            'encode': grpc.unary_unary_rpc_method_handler(
+                    servicer.encode,
+                    request_deserializer=yaclips__pb2.ListOfRawData.FromString,
+                    response_serializer=yaclips__pb2.ListOfEncodedData.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'clip', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
-# This class is part of an EXPERIMENTAL API.
+ # This class is part of an EXPERIMENTAL API.
 class clip(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def encode(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/clip/encode',
+            yaclips__pb2.ListOfRawData.SerializeToString,
+            yaclips__pb2.ListOfEncodedData.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
