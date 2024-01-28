@@ -2,8 +2,6 @@ name: Gen proto
 
 on:
     push:
-    pull_request:
-        branches: ["master", "main"]
 
 permissions:
     contents: write
@@ -25,7 +23,10 @@ jobs:
             - name: Build and test binding
               run: |
                   ./generate_proto.sh
+                  pip install .
+                  pip install ./client
                   python -c "from yaclips.proto import yaclips_pb2, yaclips_pb2_grpc"
+                  python -c "from yaclips_client.proto import yaclips_pb2, yaclips_pb2_grpc"
             # Lint before commit
             - uses: pre-commit/action@v3.0.0
               continue-on-error: true

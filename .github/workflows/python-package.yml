@@ -7,7 +7,7 @@ on:
         branches: ["master", "main"]
 
 jobs:
-    build:
+    main:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -28,3 +28,29 @@ jobs:
             - name: Test with pytest
               run: |
                   pytest -vv
+
+    client:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: ["3.8", "3.9", "3.10", "3.11"]
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v5
+              with:
+                  python-version: ${{ matrix.python-version }}
+                  cache: "pip"
+            - name: Install dependencies
+              run: |
+                  pushd client
+                  python -m pip install --upgrade pip
+                  python -m pip install -e .[test]
+                  popd
+            - name: Test with pytest
+              run: |
+                  pushd client
+                  pytest -vv
+                  popd
