@@ -1,7 +1,7 @@
 name: Gen proto
 
 on:
-    push: 
+    push:
 
 permissions:
     contents: write
