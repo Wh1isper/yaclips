@@ -10,4 +10,3 @@ python -m grpc_tools.protoc -I./proto --pyi_out=./yaclips/proto --python_out=./y
 echo "Generating client package's proto..."
 python -m grpc_tools.protoc -I./proto --pyi_out=./client/yaclips_client/proto --python_out=./client/yaclips_client/proto --grpc_python_out=./client/yaclips_client/proto ./proto/yaclips.proto
 2to3 -n -w ./client/yaclips_client/proto/*_pb2*
-

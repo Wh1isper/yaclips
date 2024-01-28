@@ -24,7 +24,7 @@ jobs:
                   python-version: ${{ matrix.python-version }}
             - name: Build and test binding
               run: |
-                  ./generate_proto.shl 
+                  ./generate_proto.shl
                   pip install .
                   pip install ./client
                   python -c "from yaclips.proto import yaclips_pb2, yaclips_pb2_grpc"
