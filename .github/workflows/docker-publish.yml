@@ -41,4 +41,4 @@ jobs:
                   platforms: linux/amd64,linux/arm64/v8
                   file: ./docker/Dockerfile
                   push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/yaclips:${{ github.ref_name }}
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/yaclips-client:${{ github.ref_name }}
