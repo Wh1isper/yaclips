@@ -1,9 +1,7 @@
 name: Gen proto
 
 on:
-    push:
-    pull_request:
-        branches: ["master", "main"]
+    push: 
 
 permissions:
     contents: write
